@@ -10,5 +10,5 @@ jobs:
         with:
           node-version: 23
       - run: ls -l
-      - run: npm clean install
+      - run: npm clean-install
       - run: npm run lint
