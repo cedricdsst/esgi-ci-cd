@@ -7,6 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ls -l
-      - run: sudo apt-get
-             sudo apt-get install --yes cowsay
+      - run: |
+          sudo apt-get
+          sudo apt-get install --yes cowsay
       - run: cat README.md |cowsay
