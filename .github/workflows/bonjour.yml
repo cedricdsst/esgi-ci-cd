@@ -10,10 +10,11 @@ jobs:
       - uses: actions/checkout@v4 # Récupère le contenu du dépôt
 
       # Nouvelle étape : Analyse du Dockerfile avec Hadolint
-      - uses: hadolint/hadolint-action@v3.1.0
-        with:
-          dockerfile: ./Dockerfile
+      #- uses: hadolint/hadolint-action@v3.1.0
+      #  with:
+      #    dockerfile: ./Dockerfile
 
+      - run: hadolint ./Dockerfile
       - run: docker image build --tag="${IMAGE_NAME}" ./
       
       - run: docker container run --volume="$(pwd)":"$(pwd)" --workdir="/app" "${IMAGE_NAME}" npm run lint
