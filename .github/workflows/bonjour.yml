@@ -4,11 +4,16 @@ on:
 jobs:
   dire_bonjour:
     runs-on: ubuntu-22.04
+    env:
+      IMAGE_NAME: "mynode"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v4 # Récupère le contenu du dépôt
+
+      # Nouvelle étape : Analyse du Dockerfile avec Hadolint
+      - uses: hadolint/hadolint-action@v3.1.0
         with:
-          node-version: 23
-      - run: ls -l
-      - run: npm clean-install
-      - run: npm run lint
+          dockerfile: ./Dockerfile
+
+      - run: docker image build --tag="${IMAGE_NAME}" ./
+      
+      - run: docker container run --volume="$(pwd)":"$(pwd)" --workdir="/app" "${IMAGE_NAME}" npm run lint
